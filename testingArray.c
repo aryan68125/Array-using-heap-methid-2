@@ -20,6 +20,8 @@ void maxArray();
 void BinarySearchArray();
 void LinearSearchArray();
 void deleteArray();
+void CreateArrayTwo();
+void displayArrayTwo();
 
 int *arr;
 int size;
@@ -27,6 +29,11 @@ int length;
 
 int *brr;
 int lengthb;
+int sizeb;
+
+int *crr;
+int lengthc=0;
+int sizec;
 
 void createArray() //containing the logic for creaton of array with ability to enter the size dynamically during runtime
 {
@@ -462,15 +469,140 @@ void rotateArray() //this function will rotate the elements inside the array
 
 }
 
+//from here on out functions of binary operations on array starts
+
+void CreateArrayTwo() //this function will merge the elements of arrayA and arrayB in ascending order in ArrayC
+{
+  //creation of Array A
+ printf("Enter the size of Array A\n");
+ scanf("%d",&size);
+ printf("Enter the number of elements you want to insert in Array A\n");
+ scanf("%d",&length);
+ arr=(int*)malloc(size*sizeof(int));  //Array A
+ if (length<=size)
+ {
+  printf("Enter the elements inside Array A\n");
+  for(int i=0;i<length;i++)
+ {
+	scanf("%d",&arr[i]);
+ }
+
+  int freeA = size - length;
+  printf("Free space in Array A is %d\n",freeA);
+ }
+  if(length>size)
+  {
+    printf("Array A creation Failed!!!!\n");
+    printf("Number of elements you want to enter is more than the size of Array A\n");
+    printf("Array A size =%d\n", size);
+    printf("number of elements to be entered inside Array A = %d\n",length);
+  }
+
+  //creation of Array B
+ printf("Enter the size of Array B\n");
+ scanf("%d",&sizeb);
+ printf("Enter the number of elements you want to insert in Array B\n");
+ scanf("%d",&lengthb);
+ brr=(int*)malloc(sizeb*sizeof(int));  //Array B
+ if (lengthb<=sizeb)
+ {
+  printf("Enter the elements inside Array B\n");
+  for(int i=0;i<lengthb;i++)
+ {
+	scanf("%d",&brr[i]);
+ }
+
+  int freeB = sizeb - lengthb;
+  printf("Free space in Array B is %d\n",freeB);
+ }
+  if(lengthb>sizeb)
+  {
+    printf("Array B creation Failed!!!!\n");
+    printf("Number of elements you want to enter is more than the size of Array B\n");
+    printf("Array B size =%d\n", sizeb);
+    printf("number of elements to be entered inside Array B = %d\n",lengthb);
+  }
+
+  //creation of Array C
+ crr=(int*)malloc(sizec*sizeof(int));  //Array C
+ sizec = size + sizeb;
+ lengthc=0;
+
+}
+
+void displayArrayTwo()
+{
+	printf("Printing Array A\n");
+	for(int i=0;i<length;i++)
+	{
+		printf("A[%d] = %d\n",i,arr[i]);
+	}
+	printf("Printing Array B\n");
+	for(int j=0;j<lengthb;j++)
+	{
+		printf("B[%d] = %d\n",j,brr[j]);
+	}
+	if(lengthc == 0)
+	{
+		printf("Array C is empty\n");
+	}
+	else
+	{
+		printf("Printing Array C\n");
+		for(int k=0;k<lengthc;k++)
+	{
+		printf("C[%d] = %d\n",k,crr[k]);
+	}
+	}
+}
+
+void MergeArray()
+{
+   int i; //for Traversing array A
+   int j; //for traversing Array B
+   int k=0; //for traversing Array C
+   while(i<length && j<lengthb)
+   {
+   	if(arr[i]<brr[j])
+   	{
+   		crr[k]=arr[i];
+   		k++;
+   		i++;
+   	}
+   	else
+   	{
+   		crr[k]=brr[j];
+   		k++;
+   		j++;
+   	}
+   }
+   //for entering the remaining elements inside the Array C
+   for(;i<length;i++)
+   {
+   	crr[k]=arr[i];
+   	k++;
+   }
+   for(;j<lengthb;j++)
+   {
+   	crr[k]=brr[j];
+   	k++;
+   }
+  lengthc = length + lengthb;
+  printf("Merging of Array A and Array B Successfull!!!!\n");
+}
+
 int main()
 {
 	int key; //choice for menue switch case
 	int O=0; // menue loop variable
+	int choice15;//choice variable for menue of Binary operations on array
+	int Q=0;//do while loop variable for 
 //....................................................................................
 	
 	do
 	{
     printf("---------------------------Menue--------------------------------\n");
+    printf("Press 0 to perform Binary operations on Array\n");
     printf("Press 1 to Create the Array\n");
     printf("Press 2 to Display the Array\n");
     printf("Press 3 to sort the array in ascending array\n");
@@ -492,75 +624,141 @@ int main()
     scanf("%d",&key);
     printf("\n");
     switch(key)
-    {
+    {          
+    	case 0:
+    	printf("---------------BINARY OPERATIONS ON 1D ARRAY-----------------\n");
+    	do
+    	{
+    	printf("Press 1 to Create Array A and Array B\n");
+    	printf("Press 2 to Display array A; B & C \n");
+    	printf("Press 3 to Merge Array A and Array B in Array C in ascending order\n");
+    	printf("Press 4 to Go to the main Array menue\n");
+    	scanf("%d",&choice15);
+    	switch(choice15)
+    	{
+        case 1:
+        CreateArrayTwo();
+        printf("\n");
+        break;
+
+        case 2:
+        displayArrayTwo();
+        printf("\n");
+        break;
+
+        case 3:
+        MergeArray();
+        printf("\n");
+        break;
+
+        case 4:
+        printf("------------------------Developer info----------------------\n");
+    	printf("Name:- Aditya Kumar\n");
+    	printf("Course:-B.Tech CS\n");
+    	printf("Year:-2nd tear\n");
+    	printf("Roll Number:-1901230100001\n");
+    	printf("college code:-123\n");
+    	printf("\n");
+    	printf("Program terminated by the user........\n");
+    	Q=4000;
+    	printf("\n");
+    	break;
+
+        default:
+        printf("Wrong choice!!!!...\n");
+        break;
+        }
+        }while(Q<3000);
+    	printf("\n");
+    	break;
+
+        //sub Menue case closed
+
     	case 1:
     	createArray(); //create array
     	printf("\n");
     	break;
+
     	case 2:
     	displayArray(); //display elements in array
     	printf("\n");
     	break;
+
     	case 3:
     	sortArrayAcending();
     	printf("\n");
     	break;
+
     	case 4:
     	sortArrayDecending();
     	printf("\n");
     	break;
+
     	case 5:
     	insertAscendSort();
     	printf("\n");
     	break;
+
     	case 6:
     	insertDescendSort();
     	printf("\n");
     	break;
+
     	case 7:
     	insertArray();
     	printf("\n");
     	break;
+
     	case 8:
     	deleteArray();
     	printf("\n");
     	break;
+
     	case 9:
     	LinearSearchArray();
     	printf("\n");
     	break;
+
     	case 10:
     	BinarySearchArray();
     	printf("\n");
     	break;
+
     	case 11:
     	maxArray();
     	printf("\n");
     	break;
+
     	case 12:
     	miniArray();
     	printf("\n");
     	break;
+
     	case 13:
     	sumArray();
     	printf("\n");
     	break;
+
     	case 14:
     	AvgArray();
     	printf("\n");
     	break;
+
     	case 15:
     	setArray();
     	printf("\n");
     	break;
+
     	case 16:
     	ReverseArray();
     	printf("\n");
     	break;
+
     	case 17:
     	rotateArray();
     	printf("\n");
     	break;
+
     	case 18:
     	printf("------------------------Developer info----------------------\n");
     	printf("Name:- Aditya Kumar\n");
@@ -573,6 +771,7 @@ int main()
     	O=4000;
     	printf("\n");
     	break;
+
     	default:
     	printf("wrong choice\n");
     	printf("\n");
