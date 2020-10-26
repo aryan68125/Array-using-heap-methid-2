@@ -20,20 +20,27 @@ void maxArray();
 void BinarySearchArray();
 void LinearSearchArray();
 void deleteArray();
+//from here the functions of binary operations starts
 void CreateArrayTwo();
 void displayArrayTwo();
+void sortBinaryArrayAscending();
+void UnionArray();
+void MergeArray();
+void IntersectionArray();
+void DifferenceArray();
+void duplicateElement();
 
 int *arr;
-int size;
-int length;
+int size=0;
+int length=0;
 
 int *brr;
-int lengthb;
-int sizeb;
+int lengthb=0;
+int sizeb=0;
 
 int *crr;
 int lengthc=0;
-int sizec;
+int sizec=0;
 
 void createArray() //containing the logic for creaton of array with ability to enter the size dynamically during runtime
 {
@@ -556,11 +563,44 @@ void displayArrayTwo()
 	}
 }
 
-void MergeArray()
+void sortBinaryArrayAscending()  //sorting array A and Array B in ascending order
+{
+	int tempo; //temporary variable for swapping
+
+   for(int i=0;i<length-1;i++) //sorting array A in ascending order
+   {
+   	for(int j=i+1;j<length;j++)
+   	{
+   		if(arr[i]>arr[j])
+        {
+        	tempo=arr[i];
+        	arr[i]=arr[j];
+        	arr[j]=tempo;
+        }
+   	}
+   }
+
+   for(int i=0;i<lengthb-1;i++)  //sorting of array B in ascending order
+   {
+   	for(int j=i+1;j<lengthb;j++)
+   	{
+   		if(brr[i]>brr[j])
+   		{
+   			tempo = brr[i];
+   			brr[i]=brr[j];
+   			brr[j]=tempo;
+   		}
+   	}
+   }
+
+}
+
+void MergeArray()   //merging and union are the same for sorted arrays
 {
    int i; //for Traversing array A
    int j; //for traversing Array B
    int k=0; //for traversing Array C
+   sortBinaryArrayAscending();
    while(i<length && j<lengthb)
    {
    	if(arr[i]<brr[j])
@@ -589,6 +629,106 @@ void MergeArray()
    }
   lengthc = length + lengthb;
   printf("Merging of Array A and Array B Successfull!!!!\n");
+}
+
+void UnionArray()
+{
+   int i; //for Traversing array A
+   int j; //for traversing Array B
+   int k=0; //for traversing Array C
+   sortBinaryArrayAscending();
+   while(i<length && j<lengthb) //logic to perform union operation on the two array
+   {
+   	if(arr[i]<brr[j])
+   	{
+   		crr[k]=arr[i];
+   		k++;
+   		i++;
+   	}
+   	else if(brr[j]<arr[i])
+   	{
+   		crr[k]=brr[j];
+   		k++;
+   		j++;
+   	}
+   	else // if both array arr[i] is equal to brr[j] then copy the element from any one of the array
+   	{    // and increment all the i, j and k by one to avoid any duplication 
+   		crr[k]=arr[i];
+   		k++;
+   		i++;
+   		j++;
+   	}
+   }
+   //for entering the remaining elements inside the Array C
+   for(;i<length;i++)
+   {
+   	crr[k]=arr[i];
+   	k++;
+   }
+   for(;j<lengthb;j++)
+   {
+   	crr[k]=brr[j];
+   	k++;
+   }
+  lengthc = k;
+  printf("Union of Array A and Array B Successfull!!!!\n");
+}
+
+void IntersectionArray()
+{
+   int i; //for Traversing array A
+   int j; //for traversing Array B
+   int k=0; //for traversing Array C
+   sortBinaryArrayAscending();
+   while(i<length && j<lengthb) //logic to perform union operation on the two array
+   {
+   	if(arr[i]<brr[j])
+   	{
+   		i++;    //dont copy only update i
+   	}
+   	else if(brr[j]<arr[i])
+   	{
+   		j++;    //dont copy only update j
+   	}
+   	else // if both array arr[i] is equal to brr[j] then copy the element from any one of the array
+   	{    // and increment all the i, j and k by one to avoid any duplication 
+   		crr[k]=arr[i];
+   		k++;
+   		i++;
+   		j++;
+   	}
+   }
+  lengthc = k;
+  printf("Intersection of Array A and Array B Successfull!!!!\n");
+}
+
+void DifferenceArray()
+{
+	int i; //for Traversing array A
+   int j; //for traversing Array B
+   int k=0; //for traversing Array C
+   sortBinaryArrayAscending();
+   while(i<length && j<lengthb) //logic to perform union operation on the two array
+   {
+   	if(arr[i]<brr[j])  //only copy array arr into array crr
+   	{
+   		crr[k]=arr[i];
+   		k++;
+   		i++;
+   	}
+   	else if(brr[j]<arr[i]) //dont copy array brr elements into array crr
+   	{
+   		j++;
+   	}
+   	else // if both array arr[i] is equal to brr[j] then dont copy the element from any one of the array
+   	{    // and increment all the i and j by one to avoid any duplication 
+   		i++;
+   		j++;
+   	}
+   }
+  lengthc = k;
+  printf("Difference of Array A and Array B Successfull!!!!\n");
+
 }
 
 int main()
@@ -631,8 +771,11 @@ int main()
     	{
     	printf("Press 1 to Create Array A and Array B\n");
     	printf("Press 2 to Display array A; B & C \n");
-    	printf("Press 3 to Merge Array A and Array B in Array C in ascending order\n");
-    	printf("Press 4 to Go to the main Array menue\n");
+    	printf("Press 3 to Find the union of Array A and Array B\n");
+    	printf("Press 4 to Merge elements in array A and B in ascending order\n");
+    	printf("Press 5 to Perform Intersection operation on Array A and B\n");
+    	printf("Press 6 to perform set Difference operation on set of Array A and B\n");
+    	printf("Press 7 to Go to the main Array menue\n");
     	scanf("%d",&choice15);
     	switch(choice15)
     	{
@@ -647,11 +790,26 @@ int main()
         break;
 
         case 3:
+        UnionArray(); 
+        printf("\n");
+        break;
+        
+        case 4:
         MergeArray();
         printf("\n");
         break;
 
-        case 4:
+        case 5:
+        IntersectionArray();
+        printf("\n");
+        break;
+        
+        case 6:
+        DifferenceArray();
+        printf("\n");
+        break;
+
+        case 7:
         printf("------------------------Developer info----------------------\n");
     	printf("Name:- Aditya Kumar\n");
     	printf("Course:-B.Tech CS\n");
